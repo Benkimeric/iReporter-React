@@ -1,0 +1,26 @@
+#topdecor0 {
+  min-height: 100px;
+  background-color: #03746f;
+}
+
+#signup_box {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+#signup_box form{
+    padding-top: 60px;
+}
+
+#email_error{
+  display: none;
+}
+ #username_error{
+  display: none;
+}
+ #password_error {
+  display: none;
+}
+#phone_error{
+  display: none;
+}
