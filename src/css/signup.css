@@ -24,3 +24,8 @@
 #phone_error{
   display: none;
 }
+
+#extra a{
+  color: red;
+  /* padding-left: 70px; */
+}

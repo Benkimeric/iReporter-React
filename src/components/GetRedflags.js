@@ -3,7 +3,8 @@ import Redflags from "./Redflags";
 
 class GetRedflags extends Component {
   state = {
-    redflags: []
+    redflags: [],
+    loaded: false
   };
 
   componentDidMount() {
@@ -18,17 +19,23 @@ class GetRedflags extends Component {
       .then(data => {
         // console.log(localStorage.getItem('token'))
         this.setState({
-          redflags: data
+          redflags: data,
+          loaded: true
         });
       });
   }
 
   render() {
-    return (
-      <div className="center">
-        <Redflags redflags={this.state.redflags} />
-      </div>
-    );
+    let loaded = this.state.loaded;
+    if (!loaded) {
+      return <div className="center">Loading...</div>;
+    } else {
+      return (
+        <div className="center">
+          <Redflags redflags={ this.state.redflags } />
+        </div>
+      );
+    }
   }
 }
 
