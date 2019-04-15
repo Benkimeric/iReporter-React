@@ -38,6 +38,15 @@ class Signup extends Component {
     var password_error = document.getElementById("password_error");
     password_error.style.display = "none";
 
+    var first_name_error = document.getElementById("first_name_error");
+    first_name_error.style.display = "none";
+
+    var other_name_error = document.getElementById("other_name_error");
+    other_name_error.style.display = "none";
+
+    var last_name_error = document.getElementById("last_name_error");
+    last_name_error.style.display = "none";
+
     let {
       first_name,
       other_name,
@@ -84,13 +93,34 @@ class Signup extends Component {
           )
             .then(response => response.json())
             .then(data => {
-              // console.log(data);
               this.props.history.push("/");
             });
         } else {
-          if (data.email) {
-            // console.log(data.email[0])
-            // console.log("done")
+          if (data.first_name) {
+            try {
+              var error = document.getElementById("first_name_error");
+              error.innerHTML = data.first_name[0];
+              error.style.display = "block";
+            } catch (e) {
+              console.log(e);
+            }
+          } else if (data.other_name) {
+            try {
+              var error = document.getElementById("other_name_error");
+              error.innerHTML = data.other_name[0];
+              error.style.display = "block";
+            } catch (e) {
+              console.log(e);
+            }
+          } else if (data.last_name) {
+            try {
+              var error = document.getElementById("last_name_error");
+              error.innerHTML = data.last_name[0];
+              error.style.display = "block";
+            } catch (e) {
+              console.log(e);
+            }
+          } else if (data.email) {
             try {
               var error = document.getElementById("email_error");
               error.innerHTML = data.email[0];
@@ -130,38 +160,60 @@ class Signup extends Component {
   render() {
     return (
       <div className="">
-        <div id="topdecor0">
-          <div className="topnav">
-            <h3>iReporter</h3>
-          </div>
-        </div>
-        <div id="signup_box" className="center z-depth-1">
+        <div id="signup_box">
           <h2 id="login">Sign Up</h2>
           <Form className="signupform" onSubmit={this.handleSubmit}>
             <Form.Group widths={2}>
-              <Form.Input
-                id="first_name"
-                label="First name"
-                placeholder="first name"
-                onChange={this.handleChange}
-                required
-              />
-              <Form.Input
-                id="last_name"
-                label="Last name"
-                placeholder="last name"
-                onChange={this.handleChange}
-                required
-              />
+              <Form.Field>
+                <Form.Input
+                  id="first_name"
+                  label="First name"
+                  placeholder="first name"
+                  onChange={this.handleChange}
+                  required
+                />
+                <Label
+                  className="first_name_error"
+                  id="first_name_error"
+                  basic
+                  color="red"
+                  pointing
+                />
+              </Form.Field>
+              <Form.Field>
+                <Form.Input
+                  id="last_name"
+                  label="Last name"
+                  placeholder="last name"
+                  onChange={this.handleChange}
+                  required
+                />
+                <Label
+                  className="last_name_error"
+                  id="last_name_error"
+                  basic
+                  color="red"
+                  pointing
+                />
+              </Form.Field>
             </Form.Group>
             <Form.Group widths={2}>
-              <Form.Input
-                id="other_name"
-                label="Other names"
-                placeholder="other names"
-                onChange={this.handleChange}
-                required
-              />
+              <Form.Field>
+                <Form.Input
+                  id="other_name"
+                  label="Other names"
+                  placeholder="other names"
+                  onChange={this.handleChange}
+                  required
+                />
+                <Label
+                  className="other_name_error"
+                  id="other_name_error"
+                  basic
+                  color="red"
+                  pointing
+                />
+              </Form.Field>
               <Form.Field>
                 <Form.Input
                   id="username"
@@ -235,6 +287,12 @@ class Signup extends Component {
             <Button id="signup_btn" type="submit">
               Sign Up
             </Button>
+            <br />
+            <br />
+            <span>Already have an account? </span>
+            <Link to="/">Login</Link>
+            <br />
+            <br />
           </Form>
         </div>
       </div>

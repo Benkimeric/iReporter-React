@@ -34,9 +34,7 @@ class Login extends Component {
       .then(response => response.json())
       .then(data => {
         localStorage.setItem("token", data.token);
-        // console.log(data)
         document.getElementById("submit_btn").innerHTML = "Submit";
-        // console.log(this.props)
         data.token
           ? this.props.history.push("/getredflags")
           : (document.getElementById("login_error_label").innerHTML =

@@ -21,10 +21,30 @@
  #password_error {
   display: none;
 }
+#title_error{
+  display: none;
+}
+#comment_error{
+  display: none;
+}
+#location_error{
+  display: none;
+}
+#post_error{
+  display: none;
+}
 #phone_error{
   display: none;
 }
-
+#first_name_error{
+  display: none;
+}
+#other_name_error{
+  display: none;
+}
+#last_name_error{
+  display: none;
+}
 #extra a{
   color: red;
   /* padding-left: 70px; */

@@ -17,12 +17,38 @@ class GetRedflags extends Component {
     })
       .then(res => res.json())
       .then(data => {
-        // console.log(localStorage.getItem('token'))
-        this.setState({
-          redflags: data,
-          loaded: true
-        });
+        if (data.detail){
+            alert("Session has expired, please login again")
+            this.props.history.push("/")
+        }else{
+            this.setState({
+                redflags: data,
+                loaded: true
+              });
+        }        
       });
+  }
+
+  openNextPage = (newPage) =>{
+    fetch(newPage, {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          Authorization: "Bearer " + localStorage.getItem("token")
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.detail){
+              alert("Session has expired, please login again")
+              this.props.history.push("/")
+          }else{
+              this.setState({
+                  redflags: data,
+                  loaded: true
+                });            
+          }        
+        });
   }
 
   render() {
@@ -32,7 +58,7 @@ class GetRedflags extends Component {
     } else {
       return (
         <div className="center">
-          <Redflags redflags={ this.state.redflags } />
+          <Redflags redflags={ this.state.redflags } next={ this.openNextPage } />
         </div>
       );
     }
