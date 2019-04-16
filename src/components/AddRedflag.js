@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Button, Form, Label } from "semantic-ui-react";
+import { Button, Form, Label, TextArea } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import "../css/login.css";
 
 class AddRedflag extends Component {
@@ -8,6 +9,15 @@ class AddRedflag extends Component {
     title: "",
     comment: "",
     location: ""
+  };
+
+  displayMessage = message => {
+    toast.error(message, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+      hideProgressBar: true,
+      pauseOnHover: true
+    });
   };
 
   handleChange = e => {
@@ -29,9 +39,6 @@ class AddRedflag extends Component {
     var location_error = document.getElementById("location_error");
     location_error.style.display = "none";
 
-    var post_error = document.getElementById("post_error");
-    post_error.style.display = "none";
-
     let { title, comment, location } = this.state;
 
     fetch("https://ireporter-drf-api-staging.herokuapp.com/api/redflags/", {
@@ -50,11 +57,17 @@ class AddRedflag extends Component {
       .then(data => {
         document.getElementById("submit_btn").innerHTML = "Submit";
         if (data.detail) {
-          console.log(data);
+          // console.log(data);
+          this.displayMessage("Please login again");
           this.props.history.push("/");
         } else if (data.status == 201) {
-            alert("Redfalg record created successfully")
-            document.getElementById('add_flag_form').reset()
+          toast.success("Redfalg record created successfully", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            hideProgressBar: true,
+            pauseOnHover: true
+          });
+          document.getElementById("add_flag_form").reset();
           console.log(data);
         }
         if (data.title) {
@@ -81,16 +94,14 @@ class AddRedflag extends Component {
           } catch (e) {
             console.log(e);
           }
-        }else if (data.status == 409) {
+        } else if (data.status == 409) {
           try {
-            var error = document.getElementById("post_error");
-            error.innerHTML = data.message;
-            error.style.display = "block";
+            this.displayMessage(data.message);
           } catch (e) {
             console.log(e);
           }
-        }else{
-          console.log(data)
+        } else {
+          console.log(data);
         }
       });
   };
@@ -98,39 +109,39 @@ class AddRedflag extends Component {
     return (
       <div className="">
         <Form id="add_flag_form" onSubmit={this.handleSubmit}>
-          {/* <label id="login_error_label"> </label> */}
-          <Label basic color="red" id="post_error" />
-
-          <Form.Field>
-            <label>Title</label>
-            <input
-              id="title"
-              placeholder="Redflag Title"
-              onChange={this.handleChange}
-              required
-            />
-            <Label id="title_error" basic color="red" pointing />
-          </Form.Field>
+          <Form.Group widths="equal">
+            <Form.Field>
+              <label>Title</label>
+              <input
+                id="title"
+                placeholder="Redflag Title"
+                onChange={this.handleChange}
+                required
+              />
+              <Label id="title_error" basic color="red" pointing />
+            </Form.Field>
+            <Form.Field>
+              <label>Location</label>
+              <input
+                id="location"
+                placeholder="Redflag Location"
+                onChange={this.handleChange}
+                required
+              />
+              <Label id="location_error" basic color="red" pointing />
+            </Form.Field>
+          </Form.Group>
           <Form.Field>
             <label>Comment</label>
-            <input
+            <TextArea
               id="comment"
-              placeholder="Redflag Comment"
+              style={{ minHeight: 100 }}
               onChange={this.handleChange}
-              required
+              placeholder="Redflag Comment"
             />
             <Label id="comment_error" basic color="red" pointing />
           </Form.Field>
-          <Form.Field>
-            <label>Location</label>
-            <input
-              id="location"
-              placeholder="Redflag Location"
-              onChange={this.handleChange}
-              required
-            />
-            <Label id="location_error" basic color="red" pointing />
-          </Form.Field>
+
           <Button type="submit" id="submit_btn">
             Post
           </Button>

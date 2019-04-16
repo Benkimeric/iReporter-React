@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import {
   Card,
   Button,
@@ -13,8 +15,17 @@ import {
 } from "semantic-ui-react";
 
 const Redflags = ({ redflags, next }) => {
+  function displayMessage(message) {
+    toast.error(message, {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 3000,
+      hideProgressBar: true,
+      pauseOnHover: true
+    });
+  }
+
   function deleteRedflag(e) {
-    let flag_id = e.target.name;
+    let flag_id = e.target.id;
     fetch(
       "https://ireporter-drf-api-staging.herokuapp.com/api/redflags/" + flag_id,
       {
@@ -28,30 +39,37 @@ const Redflags = ({ redflags, next }) => {
       .then(res => res.json())
       .then(data => {
         if (data.status == 200) {
-          alert(data.message);
-          window.location.reload() //!!REPLACE WITH UPDATING THE STATE
+          toast.success(data.message, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            hideProgressBar: true,
+            pauseOnHover: true
+          });
+          setTimeout(function() {
+            location.reload(true);
+          }, 3000); //!!REPLACE WITH UPDATING THE STATE
         } else if (data.detail) {
-          alert("Session has expired, please login again");
+          displayMessage("Please login again");
           this.props.history.push("/");
-        } else if (data.status == 404) {
-          alert(data.error);
         } else if (data.status == 403) {
-          alert(data.error);
+          displayMessage(data.error);
+        } else if (data.status == 404) {
+          displayMessage(data.error);
         } else {
           console.log(data);
         }
       });
   }
 
-  function openNextPage(e){
-    let next_url = e.target.id
-    next(next_url)
-}
+  function openNextPage(e) {
+    let next_url = e.target.id;
+    next(next_url);
+  }
 
-function openPreviousPage(e){
-    let prev_url = e.target.id
-    next(prev_url)
-}
+  function openPreviousPage(e) {
+    let prev_url = e.target.id;
+    next(prev_url);
+  }
 
   return (
     <div>
@@ -110,23 +128,12 @@ function openPreviousPage(e){
                   </Modal.Actions>
                 </Modal>
                 <Icon name="edit outline" size="large" />
-                <Modal size="mini" trigger={<Icon name="trash" size="large" />} closeIcon>
-                  <Modal.Header>Delete Redflag Record</Modal.Header>
-                  <Modal.Content>
-                    <p>Are you sure you want to delete the redflag</p>
-                  </Modal.Content>
-                  <Modal.Actions>
-                    
-                    <Button
-                      negative
-                      icon="checkmark"
-                      labelPosition="right"
-                      content="Yes"
-                      name={redflag.id}
-                      onClick={deleteRedflag}
-                    />
-                  </Modal.Actions>
-                </Modal>
+                <Icon
+                  name="trash"
+                  id={redflag.id}
+                  onClick={deleteRedflag}
+                  size="large"
+                />
               </Table.Cell>
             </Table.Row>
           ))}
@@ -136,11 +143,29 @@ function openPreviousPage(e){
           <Table.Row>
             <Table.HeaderCell colSpan="3">
               <Menu floated="right" pagination>
-                <Menu.Item onClick={ openPreviousPage } id={ redflags.previous }  as="a" icon>
-                  <Icon onClick={ openPreviousPage } id={ redflags.previous } name="chevron left" />
+                <Menu.Item
+                  onClick={openPreviousPage}
+                  id={redflags.previous}
+                  as="a"
+                  icon
+                >
+                  <Icon
+                    onClick={openPreviousPage}
+                    id={redflags.previous}
+                    name="chevron left"
+                  />
                 </Menu.Item>
-                <Menu.Item onClick={ openNextPage } id={ redflags.next } as="a" icon>
-                  <Icon onClick={ openNextPage } id={ redflags.next } name="chevron right" />
+                <Menu.Item
+                  onClick={openNextPage}
+                  id={redflags.next}
+                  as="a"
+                  icon
+                >
+                  <Icon
+                    onClick={openNextPage}
+                    id={redflags.next}
+                    name="chevron right"
+                  />
                 </Menu.Item>
               </Menu>
             </Table.HeaderCell>

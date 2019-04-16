@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Redflags from "./Redflags";
+import { toast } from 'react-toastify';
+
 
 class GetRedflags extends Component {
   state = {
@@ -17,8 +19,13 @@ class GetRedflags extends Component {
     })
       .then(res => res.json())
       .then(data => {
-        if (data.detail){
-            alert("Session has expired, please login again")
+        if (data.detail){            
+            toast.error( "Please Login again", {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose:3000,
+              hideProgressBar:true,
+              pauseOnHover:true
+            })
             this.props.history.push("/")
         }else{
             this.setState({
@@ -39,8 +46,13 @@ class GetRedflags extends Component {
       })
         .then(res => res.json())
         .then(data => {
-          if (data.detail){
-              alert("Session has expired, please login again")
+          if (data.detail){              
+              toast.error( "Please Login again", {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose:3000,
+                hideProgressBar:true,
+                pauseOnHover:true
+              })
               this.props.history.push("/")
           }else{
               this.setState({

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, Form, Checkbox } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
 import "../css/login.css";
 
 class Login extends Component {
@@ -34,16 +35,22 @@ class Login extends Component {
       .then(response => response.json())
       .then(data => {
         localStorage.setItem("token", data.token);
-        document.getElementById("submit_btn").innerHTML = "Submit";
+        document.getElementById("submit_btn").innerHTML = "Login";
         data.token
           ? this.props.history.push("/getredflags")
-          : (document.getElementById("login_error_label").innerHTML =
-              data.message);
+          : (
+            toast.error( data.message, {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose:3000,
+              hideProgressBar:true,
+              pauseOnHover:true
+            })
+              );
       });
   };
   render() {
     return (
-      <div className="">
+      <div className="loginForm">
         <div id="topdecor">
           <div className="topnav">
             <h3>iReporter</h3>
