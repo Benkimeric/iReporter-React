@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import {
-  Card,
+  Form,
   Button,
   Image,
   Header,
@@ -11,10 +11,12 @@ import {
   Modal,
   Menu,
   Table,
-  Label
+  Label,
+  TextArea,
+  Container
 } from "semantic-ui-react";
 
-const Redflags = ({ redflags, next }) => {
+const Redflags = ({ redflags, next, editRedflag, handleEditChange, getId }) => {
   function displayMessage(message) {
     toast.error(message, {
       position: toast.POSITION.TOP_CENTER,
@@ -127,7 +129,66 @@ const Redflags = ({ redflags, next }) => {
                     </a>
                   </Modal.Actions>
                 </Modal>
-                <Icon name="edit outline" size="large" />
+                <Modal trigger={<Icon name="edit outline" id={redflag.id} onClick = { getId } size="large" />}>
+                  <Modal.Content>
+                  <Modal.Header> <h3><Icon name="edit outline" />Edit Redflag</h3> </Modal.Header>
+                  <br></br>
+                    <Modal.Description>
+                      <Form id="edit_flag_form" onSubmit = {editRedflag}>
+                        <Form.Group widths="equal">
+                          <Form.Field>
+                            <label>Title</label>
+                            <input
+                              id="title"
+                              placeholder="Redflag Title"
+                              onChange={handleEditChange}                              
+                              required
+                            />
+                            <Label
+                              id="title_error"
+                              basic
+                              color="red"
+                              pointing
+                            />
+                          </Form.Field>
+                          <Form.Field>
+                            <label>Location</label>
+                            <input
+                              id="location"
+                              placeholder="Redflag Location"
+                              onChange={handleEditChange}                              
+                              required
+                            />
+                            <Label
+                              id="location_error"
+                              basic
+                              color="red"
+                              pointing
+                            />
+                          </Form.Field>
+                        </Form.Group>
+                        <Form.Field>
+                          <label>Comment</label>
+                          <TextArea
+                            id="comment"
+                            style={{ minHeight: 100 }}
+                            onChange={handleEditChange}
+                            placeholder="Redflag Comment"                            
+                          />
+                          <Label
+                            id="comment_error"
+                            basic
+                            color="red"
+                            pointing
+                          />
+                        </Form.Field>
+                        <Button type="submit" id="submit_btn">
+                          Post
+                        </Button>
+                      </Form>
+                    </Modal.Description>
+                  </Modal.Content>
+                </Modal>
                 <Icon
                   name="trash"
                   id={redflag.id}

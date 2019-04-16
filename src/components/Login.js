@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Button, Form, Checkbox } from "semantic-ui-react";
+import { Button, Form, Container } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import "../css/login.css";
 
 class Login extends Component {
@@ -38,59 +38,57 @@ class Login extends Component {
         document.getElementById("submit_btn").innerHTML = "Login";
         data.token
           ? this.props.history.push("/getredflags")
-          : (
-            toast.error( data.message, {
+          : toast.error(data.message, {
               position: toast.POSITION.TOP_CENTER,
-              autoClose:3000,
-              hideProgressBar:true,
-              pauseOnHover:true
-            })
-              );
+              autoClose: 3000,
+              hideProgressBar: true,
+              pauseOnHover: true
+            });
       });
   };
   render() {
     return (
-      <div className="loginForm">
-        <div id="topdecor">
-          <div className="topnav">
-            <h3>iReporter</h3>
-          </div>
+      <Container text>
+        <br />
+        <br />
+        <br />
+
+        <div className="loginForm">
+          <Form onSubmit={this.handleSubmit}>
+            <h1>Login</h1>
+
+            <Form.Field>
+              <label>Username</label>
+              <input
+                id="user_name"
+                placeholder="username"
+                onChange={this.handleChange}
+                required
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Password</label>
+              <input
+                name="password"
+                type="password"
+                id="password"
+                placeholder="password"
+                onChange={this.handleChange}
+                required
+              />
+            </Form.Field>
+            <Button type="submit" id="submit_btn">
+              Login
+            </Button>
+            <br />
+            <br />
+            <span>New user? </span>
+            <Link to="/signup">Signup</Link>
+            <br />
+            <br />
+          </Form>
         </div>
-
-        <Form onSubmit={this.handleSubmit}>
-          <label id="login_error_label"> </label>
-
-          <Form.Field>
-            <label>Username</label>
-            <input
-              id="user_name"
-              placeholder="username"
-              onChange={this.handleChange}
-              required
-            />
-          </Form.Field>
-          <Form.Field>
-            <label>Password</label>
-            <input
-              name="password"
-              type="password"
-              id="password"
-              placeholder="password"
-              onChange={this.handleChange}
-              required
-            />
-          </Form.Field>
-          <Button type="submit" id="submit_btn">
-            Login
-          </Button>
-          <br />
-          <br />
-          <span>New user? </span>
-          <Link to="/signup">Signup</Link>
-          <br />
-          <br />
-        </Form>
-      </div>
+      </Container>
     );
   }
 }

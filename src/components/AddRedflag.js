@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form, Label, TextArea } from "semantic-ui-react";
+import { Button, Form, Label, TextArea, Container } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../css/login.css";
@@ -57,7 +57,6 @@ class AddRedflag extends Component {
       .then(data => {
         document.getElementById("submit_btn").innerHTML = "Submit";
         if (data.detail) {
-          // console.log(data);
           this.displayMessage("Please login again");
           this.props.history.push("/");
         } else if (data.status == 201) {
@@ -68,7 +67,6 @@ class AddRedflag extends Component {
             pauseOnHover: true
           });
           document.getElementById("add_flag_form").reset();
-          console.log(data);
         }
         if (data.title) {
           try {
@@ -107,46 +105,52 @@ class AddRedflag extends Component {
   };
   render() {
     return (
-      <div className="">
-        <Form id="add_flag_form" onSubmit={this.handleSubmit}>
-          <Form.Group widths="equal">
+      <Container text>
+        <br />
+        <br />
+        <h3>Create New Redflag</h3>
+        <br />
+        <div className="">
+          <Form id="add_flag_form" onSubmit={this.handleSubmit}>
+            <Form.Group widths="equal">
+              <Form.Field>
+                <label>Title</label>
+                <input
+                  id="title"
+                  placeholder="Redflag Title"
+                  onChange={this.handleChange}
+                  required
+                />
+                <Label id="title_error" basic color="red" pointing />
+              </Form.Field>
+              <Form.Field>
+                <label>Location</label>
+                <input
+                  id="location"
+                  placeholder="Redflag Location"
+                  onChange={this.handleChange}
+                  required
+                />
+                <Label id="location_error" basic color="red" pointing />
+              </Form.Field>
+            </Form.Group>
             <Form.Field>
-              <label>Title</label>
-              <input
-                id="title"
-                placeholder="Redflag Title"
+              <label>Comment</label>
+              <TextArea
+                id="comment"
+                style={{ minHeight: 100 }}
                 onChange={this.handleChange}
-                required
+                placeholder="Redflag Comment"
               />
-              <Label id="title_error" basic color="red" pointing />
+              <Label id="comment_error" basic color="red" pointing />
             </Form.Field>
-            <Form.Field>
-              <label>Location</label>
-              <input
-                id="location"
-                placeholder="Redflag Location"
-                onChange={this.handleChange}
-                required
-              />
-              <Label id="location_error" basic color="red" pointing />
-            </Form.Field>
-          </Form.Group>
-          <Form.Field>
-            <label>Comment</label>
-            <TextArea
-              id="comment"
-              style={{ minHeight: 100 }}
-              onChange={this.handleChange}
-              placeholder="Redflag Comment"
-            />
-            <Label id="comment_error" basic color="red" pointing />
-          </Form.Field>
 
-          <Button type="submit" id="submit_btn">
-            Post
-          </Button>
-        </Form>
-      </div>
+            <Button type="submit" id="submit_btn">
+              Post
+            </Button>
+          </Form>
+        </div>
+      </Container>
     );
   }
 }

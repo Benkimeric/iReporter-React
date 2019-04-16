@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Button, Form, Checkbox, Label } from "semantic-ui-react";
+import { Button, Form, Container, Label } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import "../css/login.css";
 
 import "../css/signup.css";
@@ -78,7 +78,8 @@ class Signup extends Component {
       .then(response => response.json())
       .then(data => {
         document.getElementById("signup_btn").innerHTML = "Sign Up";
-        if (data.token) { //when account is created
+        if (data.token) {
+          //when account is created
           fetch(
             "https://ireporter-drf-api-staging.herokuapp.com/api/auth/activate/",
             {
@@ -95,15 +96,16 @@ class Signup extends Component {
           )
             .then(response => response.json())
             .then(data => {
-              toast.success( "Account created successfully, please login", {
+              toast.success("Account created successfully, please login", {
                 position: toast.POSITION.TOP_CENTER,
-                autoClose:3000,
-                hideProgressBar:true,
-                pauseOnHover:true
-              })
+                autoClose: 3000,
+                hideProgressBar: true,
+                pauseOnHover: true
+              });
               this.props.history.push("/");
             });
-        } else { //when error occurs
+        } else {
+          //when error occurs
           if (data.first_name) {
             try {
               var error = document.getElementById("first_name_error");
@@ -167,10 +169,13 @@ class Signup extends Component {
 
   render() {
     return (
-      <div className="">
-        <div id="loginForm">
-          <h2 id="login">Sign Up</h2>
+      <Container text>
+        <br />
+        <br />
+        <br />
+        <div className="createBoxshadow">
           <Form className="signupform" onSubmit={this.handleSubmit}>
+            <h2>Sign Up</h2>
             <Form.Group widths={2}>
               <Form.Field>
                 <Form.Input
@@ -303,7 +308,7 @@ class Signup extends Component {
             <br />
           </Form>
         </div>
-      </div>
+      </Container>
     );
   }
 }
