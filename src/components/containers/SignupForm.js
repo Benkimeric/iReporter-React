@@ -101,8 +101,8 @@ const SignupForm = props => {
               <Form.Field>
                 <Form.Input
                   id="mobile_number"
-                  label="Phone"
-                  placeholder="phone"
+                  label="Phone e.g +254727427766"
+                  placeholder="+254727427766"
                   onChange={handleChange}
                   required
                 />
