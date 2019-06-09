@@ -1,30 +1,30 @@
-#email_error{
+#email_error {
   display: none;
 }
- #username_error{
+#username_error {
   display: none;
 }
- #password_error {
+#password_error {
   display: none;
 }
-#title_error{
+#title_error {
   display: none;
 }
-#comment_error{
+#comment_error {
   display: none;
 }
-#location_error{
+#location_error {
   display: none;
 }
-#phone_error{
+#phone_error {
   display: none;
 }
-#first_name_error{
+#first_name_error {
   display: none;
 }
-#other_name_error{
+#other_name_error {
   display: none;
 }
-#last_name_error{
+#last_name_error {
   display: none;
 }

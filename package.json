@@ -11,12 +11,12 @@
   "author": "Eric Bernard a.k.a Benkim",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "express": "^4.16.4",
     "path": "^0.12.7",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-toastify": "^5.0.1",
+    "react-toastify": "^5.1.1",
     "semantic-ui-react": "^0.86.0"
   },
   "devDependencies": {
