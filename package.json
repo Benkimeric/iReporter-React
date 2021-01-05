@@ -11,7 +11,7 @@
   "author": "Eric Bernard a.k.a Benkim",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "express": "^4.16.4",
     "path": "^0.12.7",
     "react": "^16.8.6",
